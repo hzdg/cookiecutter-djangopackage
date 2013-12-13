@@ -15,14 +15,11 @@ execfile(os.path.join(os.path.dirname(__file__),
 class PyTest(TestCommand):
     def finalize_options(self):
         TestCommand.finalize_options(self)
-        self.test_args = ['tests', '-s']
+        self.test_args = ['tests']
         self.test_suite = True
 
     def run_tests(self):
         import pytest
-        # Make sure this package's tests module gets priority.
-        sys.path.insert(0, os.path.abspath(os.path.dirname(__file__)))
-        os.environ['DJANGO_SETTINGS_MODULE'] = 'tests.settings'
         errno = pytest.main(self.test_args)
         sys.exit(errno)
 
